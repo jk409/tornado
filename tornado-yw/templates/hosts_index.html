@@ -1,0 +1,66 @@
+{% extends "main.html" %}
+{% block head_js %}
+<link href="{{static_url('datatable/jquery.dataTables.css')}}"  rel="stylesheet">
+<!--link href="http://cdn.datatables.net/1.10.0/css/jquery.dataTables.css" rel="stylesheet"-->
+<style type="text/css">
+#red {color: red;}
+#blue {color: blue;}
+#orange {color: orange;}
+#green {color: green;}
+a {color: inherit;}
+</style>
+{% end %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+    <li class="active"><a href="/users">主机管理</a></li>
+	<li><a href="/hosts/add">添加</a></li>
+    <li><a href="/hosts/update">更新</a></li>
+
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}		  
+{% block bodyy %}
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">主机列表</h3>
+      </div>
+      <div class="panel-body">
+<form  action="/hosts/update" method="get">
+    <table id="hosts" class="table table-striped">
+        <thead>
+            <tr>
+                 <th>ID</th><th>主机IP</th><th>主机组</th><th>端口</th><th>用户</th><th>检测状态</th><th>操作</th>
+             </tr>
+         </thead>
+        <tbody>
+        {% for i in data %}
+             <tr>
+                 <td>{{i[0]}}</td><td>{{i[1]}}</td><td>{{i[2]}}</td><td>{{i[3]}}</td><td>{{i[4]}}</td><td>{{i[5]}}</td>
+                 <td>
+                     <!--button type="submit" class="btn btn-primary" name="id" value={{i[0]}}>编辑</button>
+                     <button type="submit" class="btn btn-danger" name="delete" value="{{i[1]}}">删除</button-->
+                     <span id="green"><a href="http://127.0.0.1/hosts/update?hosts_length=10&id={{i[0]}}">编辑</a></button></a></span>
+                     <span id="red"><a href="/delete/hosts/{{i[0]}}">删除</button></a></span>
+                 </td>
+             </tr>
+        {% end %}
+        </tbody>
+     </table>
+
+</form>
+ </div>
+    </div>
+
+{% end %}
+{% block body_js %}
+<script src="{{ static_url('datatable/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#hosts').dataTable({
+            "language": {
+                "url": "{{ static_url('datatable/Chinese.json') }}"
+            }
+        });
+    });
+</script>
+{% end %}

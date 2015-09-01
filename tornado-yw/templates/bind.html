@@ -1,0 +1,98 @@
+{% extends "main.html" %}
+{% block head_js %}
+<script src="{{ static_url('echarts/2-2-3/build/dist/echarts.js')}}"></script>
+{% end %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+     <li><a href="/">line图</a></li>
+    <li><a href="/bind">饼图</a></li>
+    <li><a href="/ll">流量图</a></li>
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}
+
+{% block bodyy %}
+<body>
+<div id="main" style="height:600px;">
+</div>
+
+  <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '{{ static_url("echarts/2-2-3/build/dist")}}'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/pie'
+
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+            var option = {
+    title : {
+        text: '某站点用户访问来源',
+        subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['直接访问','邮件营销',]
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true,
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 1548
+                    }
+                }
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+            ]
+        }
+    ]
+};
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+   </script>
+</body>
+
+
+
+<h2 class="sub-header"></h2>
+版权JK409所有
+{% end %}

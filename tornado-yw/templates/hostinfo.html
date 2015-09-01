@@ -1,0 +1,261 @@
+{% extends "main.html" %}
+{% block head_js %}
+<script src="{{ static_url('echarts/2-2-3/build/dist/echarts.js')}}"></script>
+<META HTTP-EQUIV="Refresh" CONTENT="120">
+{% end %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+    <li><a href="/">《--返回</a></li>
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}
+
+{% block bodyy %}
+<body>
+<div id="disk" style="height:400px;"></div>
+<h2 class="sub-header"></h2>
+<div id="cpu" style="height:400px;"></div>
+<h2 class="sub-header"></h2>
+<div id="mem" style="height:400px;"></div>
+</div>
+  <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '{{ static_url("echarts/2-2-3/build/dist")}}'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                 'echarts/chart/tree'
+
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('disk'));
+
+                var option = {
+    title : {
+        text: '{{ips}}',
+        subtext: 'ID:{{ips}}',
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        //data:['意向','预购','成交']
+        data:['diskFree','diskTotal']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            name:'时间',
+            type : 'category',
+            boundaryGap : false,
+            data : {% raw tms %}
+        }
+    ],
+    yAxis : [
+        {
+            name : '磁盘容量(M)',
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'diskFree',
+            type:'line',
+            smooth:true,
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:{{[ i[1][3] for i in data]}}
+        },
+        {
+            name:'diskTotal',
+            type:'line',
+            smooth:true,
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:{{[ i[1][2] for i in data]}}
+
+        },
+    ]
+};
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+   </script>
+  <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '{{ static_url("echarts/2-2-3/build/dist")}}'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                 'echarts/chart/tree'
+
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('mem'));
+
+                var option = {
+    title : {
+        text: '内存',
+        subtext: 'IP:{{ips}}'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        //data:['意向','预购','成交']
+        data:['memFree','memTotal']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : {% raw tms %}
+        }
+    ],
+    yAxis : [
+        {
+            name: '内存容量（M）',
+            type : 'value',
+        }
+    ],
+    series : [
+        {
+            name:'memFree',
+            type:'line',
+            smooth:true,
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:{{[i[1][1] for i in data]}}
+        },
+        {
+            name:'memTotal',
+            type:'line',
+            smooth:true,
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:{{[i[1][0] for i in data]}}
+        },
+    ]
+};
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+   </script>
+  <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '{{ static_url("echarts/2-2-3/build/dist")}}'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                 'echarts/chart/tree'
+
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('cpu'));
+
+                option = {
+    title : {
+        text: 'CPU进程数',
+        subtext: 'ip:{{ips}}',
+       // x: 'center'
+    },
+    tooltip : {
+        trigger: 'axis',
+        formatter: function(params) {
+            return params[0].name + '<br/>'
+                   + params[0].seriesName + ' : ' + params[0].value + ' (个)<br/>'
+        }
+    },
+    legend: {
+        data:['cpuPercent'],
+      //  x: 'left'
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    dataZoom : {
+        show : true,
+        realtime : true,
+        start : 0,
+        end : 100
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            axisLine: {onZero: false},
+            data :{% raw tms %}
+        }
+    ],
+    yAxis : [
+        {
+            name : '进程数量',
+            type : 'value',
+           // max : 150
+        }
+    ],
+    series : [
+        {
+            name:'cpuPercent',
+            type:'line',
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:{{[i for i in cpu_data]}}
+        }
+    ]
+};
+
+
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+   </script>
+
+{% end %}

@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+    <li><a href="/">返回首页</a></li>
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}	
+{% block bodyy %}
+<form action="" method="post">
+    <button type="submit">一键巡检</button>
+</form>
+---------------------------------
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th>IP地址</th><th>端口</th><th>巡检结果</th>
+        </tr>
+      </thead>
+      <tbody>
+       {% for i in res %}
+       <tr class="{{i[2]}}">
+           <td>{{i[0]}}</td>
+           <td>{{i[1]}}</td>
+           <td>{{i[2]}}</td>
+        </tr>
+       {% end %}
+    </tbody>
+</table>
+{% end %}

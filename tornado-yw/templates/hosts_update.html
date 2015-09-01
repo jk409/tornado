@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+    <li><a href="/hosts">主机管理</a></li>
+	<li><a href="/hosts/add">添加</a></li>
+    <li class="active"><a href="">更新</a></li>
+
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}		  
+{% block bodyy %}
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">主机更新</h3>
+      </div>
+      <div class="panel-body">
+<form class="form-horizontal" method="post">
+     <div class="form-group">
+    <label  class="col-sm-2 control-label">主机ID</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机ID"  name="id" value={{data[0][0]}} readOnly="true">
+    </div>
+        </div>
+    <div class="form-group">
+    <label  class="col-sm-2 control-label">主机IP</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机IP地址"  name="hip" value="{{data[0][1]}}">
+    </div>
+        </div>
+      <div class="form-group">
+    <label  class="col-sm-2 control-label">主机组</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机组名称" name="hgroup" value="{{data[0][2]}}">
+    </div>
+  </div>
+       <div class="form-group">
+    <label  class="col-sm-2 control-label">主机端口</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机端口:0~65535" name="hport" value={{data[0][3]}}>
+    </div>
+  </div>
+       <div class="form-group">
+    <label  class="col-sm-2 control-label">主机用户</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机用户" name="huser" value="{{data[0][4]}}">
+    </div>
+  </div>
+      <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">主机密码</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="密码" name="hpasswd" value="{{data[0][5]}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label  class="col-sm-2 control-label">主机状态</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  placeholder="主机状态" name="hstatus" value={{data[0][6]}}>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" class="btn btn-primary" name="cmd" value="update">提交-更新</button>
+        <button type="submit" class="btn btn-danger" name="cmd" value="add">提交-新增</button>
+    </div>
+  </div>
+</form>
+      </div>
+</div>
+{% end %}

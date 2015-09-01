@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block head_js %}
+<META HTTP-EQUIV="Refresh" CONTENT="120">
+{% end %}
+{% block nem %}
+<ul class="nav nav-sidebar">
+    <li><a href="/">line图</a></li>
+    <li><a href="/bind">饼图</a></li>
+    <li><a href="/ll">流量图</a></li>
+</ul>
+<div class="title"><h5>最近留言</h5></div>
+{% end %}
+
+{% block bodyy %}
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">数据采集</h3>
+      </div>
+      <div class="panel-body">
+<form action="/hostinfo" method="get">
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th>ID</th><th>IP地址</th><th>注册日期</th><th>操作</th>
+        </tr>
+      </thead>
+    {% for i in ips %}
+    <tr>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}</td>
+        <td>{{i[2]}}</td>
+        <td>
+         <button type="submit" class="btn btn-sm btn-success" name="ip" value="{{i[1]}}">查看</button>
+         <a href="/delete/host/{{i[1]}}"><button type="button" class="btn btn-sm btn-danger" >删除</button></a>
+        </td>
+    </tr>
+
+    {% end %}
+</table>
+</form>
+       </div>
+</div>
+{% end %}

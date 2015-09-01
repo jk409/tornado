@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>运维后台</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ static_url('bootstrap/3_3_4/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ static_url('bootstrap/3_3_4/css/dashboard.css') }}" rel="stylesheet">
+    {% block head_js %}{% end %}
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">运维后台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <!--form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="账号" name="user">
+            <input type="text" class="form-control" placeholder="密码" name="passwd">
+            <button type="submit" class="form-control" >登陆</button>
+          </form-->
+          <form class="navbar-form navbar-right">
+
+            <a href="">来宾</a>
+            <button type="submit" class="form-control" >退出</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">报表统计</a></li>
+            <li><a href="/file">文件分发</a></li>
+            <li><a href="/check">巡检</a></li>
+            <li><a href="/users">用户管理</a></li>
+            <li><a href="/hosts">主机管理</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid"  >
+      <div class="row">
+        <div class="col-sm-3 col-md-1 sidebar">
+          {% block nem %}{% end %}
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-2 col-md-11 col-md-offset-1 main">
+            {% block bodyy %}{% end %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    {% block body_js %}{% end %}
+  </body>
+</html>
